@@ -12,15 +12,19 @@ import com.bumptech.glide.Glide
 import com.example.mvvmprac.R
 import com.example.mvvmprac.data.MovieModel
 
-class MovieListAdapter(private val activity: Activity) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+class MovieListAdapter(private val activity: Activity , private val itemClickListener: OnItemClickListener)
+    : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
-    private var movieList: List<MovieModel> = listOf() // Initialize with an empty list
+    private var movieList: List<MovieModel> = listOf()
 
 
     fun setMovieList(movieList: List<MovieModel>?) {
         if (movieList != null) {
             this.movieList = movieList
         }
+    }
+    interface OnItemClickListener {
+        fun onItemClick(movie: MovieModel)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,8 +36,12 @@ class MovieListAdapter(private val activity: Activity) : RecyclerView.Adapter<Mo
             title.text = data.title
             description.text = data.overview
             Glide.with(activity)
-                .load("https://image.tmdb.org/t/p/w500${data.poster_path}") // Correct the path to load the image
+                .load("https://image.tmdb.org/t/p/w500${data.poster_path}")
                 .into(img)
+
+            itemView.setOnClickListener {
+                itemClickListener.onItemClick(data)
+            }
         }
     }
 
@@ -49,5 +57,6 @@ class MovieListAdapter(private val activity: Activity) : RecyclerView.Adapter<Mo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         movieList?.get(position)?.let { holder.bind(it) }
+
     }
 }

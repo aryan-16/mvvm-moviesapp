@@ -33,6 +33,7 @@ class MainActivityViewModel : ViewModel() {
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 liveDataList.postValue(null)
+
             }
         })
     }

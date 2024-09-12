@@ -1,6 +1,4 @@
 package com.example.mvvmprac.retrofit
-
-import com.example.mvvmprac.data.MovieModel
 import com.example.mvvmprac.data.MovieResponse
 import retrofit2.Call
 import retrofit2.http.GET
